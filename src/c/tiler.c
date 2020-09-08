@@ -106,6 +106,9 @@ uint8_t** tilerOMP( uint8_t *input, uint16_t width, uint16_t height,
   uint16_t  tilesWide   = width / tileWidth;
   uint16_t  tilesHigh   = height / tileHeight;
 
+  // Allocate Space for Tiles in Return Container
+  tiles                 = malloc( tilesWide * tilesHigh * sizeof( uint8_t* ) );
+
   #pragma omp parallel for default( none ) num_threads( cores )               \
             shared( input, width, height, tileWidth, tileHeight, tiles, tile, \
                     tilesWide, tilesHigh )                                    \
