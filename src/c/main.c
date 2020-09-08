@@ -157,13 +157,14 @@ int main( int argc, char **argv ) {
     fprintf( stdout, "Writing Image...\n" );
   }
   imageOutStart = omp_get_wtime( );
+  length        = strlen( outBase ) + OUT_STR_BUF;
+  out           = malloc( length * sizeof( char ) );
   for( i = 0; i < numTiles; i++ ) {
     // FIXME: Adjust output filename generation so paths work.
-    length      = strlen( outBase ) + OUT_STR_BUF;
-    out         = malloc( length * sizeof( char ) );
     snprintf( out, length, "%d-%s", i, outBase );
     writePPM( tiles[i], out, tileWidth, tileHeight );
   }
+  free( out );
   imageOutEnd   = omp_get_wtime( );
 
   // Final Tasks
