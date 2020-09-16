@@ -37,7 +37,7 @@ int main( int argc, char **argv ) {
 
   // General
   const char     *name          = "Tiler";
-        uint8_t   i             = 0;     // Loop Iterator
+        uint16_t  i             = 0;     // Loop Iterator
         uint8_t   cores         = 0;     // Number of Cores to Utilize
         uint8_t   display       = 0;     // Argument to Display Debug Text
         uint8_t   length        = 0;     // Length of Output Title String
