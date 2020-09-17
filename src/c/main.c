@@ -160,11 +160,10 @@ int main( int argc, char **argv ) {
   length        = strlen( outBase ) + OUT_STR_BUF;
   out           = malloc( length * sizeof( char ) );
   for( i = 0; i < numTiles; i++ ) {
-    // FIXME: Adjust output filename generation so paths work.
+    // TODO: Adjust output filename generation so paths work.
     snprintf( out, length, "%d-%s", i, outBase );
     writePPM( tiles[i], out, tileWidth, tileHeight );
   }
-  free( out );
   imageOutEnd   = omp_get_wtime( );
 
   // Final Tasks
