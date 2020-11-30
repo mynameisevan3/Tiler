@@ -38,6 +38,7 @@ int main( int argc, char **argv ) {
   // General
   const char     *name          = "Tiler";
         uint16_t  i             = 0;     // Loop Iterator
+        uint16_t  j             = 0;     // Loop Iterator
         uint8_t   cores         = 0;     // Number of Cores to Utilize
         uint8_t   display       = 0;     // Argument to Display Debug Text
         uint8_t   length        = 0;     // Length of Output Title String
@@ -159,10 +160,12 @@ int main( int argc, char **argv ) {
   imageOutStart = omp_get_wtime( );
   length        = strlen( outBase ) + OUT_STR_BUF;
   out           = malloc( length * sizeof( char ) );
-  for( i = 0; i < numTiles; i++ ) {
-    // TODO: Adjust output filename generation so paths work.
-    snprintf( out, length, "%d-%s", i, outBase );
-    writePPM( tiles[i], out, tileWidth, tileHeight );
+  for( j = 0; j < tilesHigh; j++ ) {
+    for( i = 0; i < tilesWide; i++ ) {
+      // TODO: Adjust output filename generation so paths work.
+      snprintf( out, length, "%d-%d-%s", i, j, outBase );
+      writePPM( tiles[ j * tilesWide + i ], out, tileWidth, tileHeight );
+    }
   }
   imageOutEnd   = omp_get_wtime( );
 
