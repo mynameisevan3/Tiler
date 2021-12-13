@@ -18,7 +18,7 @@
 
 // Function Prototypes
 uint8_t* readPPM( const char *filename, uint16_t *width, uint16_t *height );
-void     writePPM( uint8_t *image, const char *filename, uint16_t width, uint16_t height );
+uint8_t  writePPM( uint8_t *image, const char *filename, uint16_t width, uint16_t height );
 
 
 // End Include Guard

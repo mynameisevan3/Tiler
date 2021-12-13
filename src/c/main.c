@@ -78,12 +78,12 @@ int main( int argc, char **argv ) {
     // Parsing Normal Arguments
     in           = argv[1];
     outBase      = argv[2];
-    cores        = atoi( argv[3] );
-    display      = atoi( argv[4] );
-    tileWidth    = atoi( argv[5] );
+    cores        = strtoul( argv[3], NULL, 0 );
+    display      = strtoul( argv[4], NULL, 0 );
+    tileWidth    = strtoul( argv[5], NULL, 0 );
     // Handle Optional Height Argument
     if( argc == ( NUM_ARGS + 1 ) ) {
-      tileHeight = atoi( argv[6] );
+      tileHeight = strtoul( argv[6], NULL, 0 );
     } else {
       tileHeight = tileWidth;
     }
@@ -190,7 +190,8 @@ int main( int argc, char **argv ) {
   // Handle Displaying All Timing Data
   if( display == 1 ) {  // Messages only when display is 1.
     fprintf( stdout, "=== Timing Data ===\n  Image In:\t\t" );
-    fprintf( stdout, "%0.7lf\n", imageInTime );                                                                                                                  fprintf( stdout, "  Operation:\t\t" );
+    fprintf( stdout, "%0.7lf\n", imageInTime );
+    fprintf( stdout, "  Operation:\t\t" );
   }
   if( display <= 1 ) {  // Gives Timing Regardless
     fprintf( stdout, "%0.7lf ", opTime );

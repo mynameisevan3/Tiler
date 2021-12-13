@@ -31,7 +31,7 @@ uint8_t* readPPM( const char *filename, uint16_t *width, uint16_t *height ) {
   // Open PPM File (Read)
   fp = fopen( filename, "rb" );
   if( fp == NULL ) {
-    fprintf( stderr, "Unable to open file %s in readPPM.\n", filename );
+    fprintf( stderr, "ReadPPM - unable to open file %s in readPPM.\n", filename );
     exit( 1 );
   }
 
@@ -96,15 +96,15 @@ uint8_t* readPPM( const char *filename, uint16_t *width, uint16_t *height ) {
 
 // writePPM - write out the image given by the output pointer to the
 //   filename specified.
-void writePPM( uint8_t *image, const char *filename, uint16_t width, uint16_t height ) {
+uint8_t writePPM( uint8_t *image, const char *filename, uint16_t width, uint16_t height ) {
 
-  FILE *fp;
+  FILE *fp = NULL;  // Output File
 
   // Create/Overwrite File Named <filename>
   fp = fopen( filename, "wb" );
   if( !fp ) {
     fprintf( stderr, "WritePPM - unable to open file '%s'.\n", filename );
-    exit( 1 );
+    return 1;
   }
 
   // Write the Header File
@@ -113,7 +113,9 @@ void writePPM( uint8_t *image, const char *filename, uint16_t width, uint16_t he
   fprintf( fp, "%d\n", MAXCOLOR8 );
   fwrite( image, width * 3, height, fp );
 
+  // Close File and Return
   fclose( fp );
+  return 0;
 
 }
 

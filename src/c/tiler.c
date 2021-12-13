@@ -15,7 +15,7 @@
 // Function Implementations
 
 // tilerSerial - given an input image file and desired tile widths and heights, this function
-//   will break the image into tiles.  Edges are discarded.
+//   will break the image into tiles.  Leftover edges that do not fit into tiles are discarded.
 // TODO: Expand for overlapping.
 uint8_t** tilerSerial( uint8_t *input, uint16_t width, uint16_t height,
                          uint16_t tileWidth, uint16_t tileHeight ) {
@@ -110,10 +110,10 @@ uint8_t** tilerOMP( uint8_t *input, uint16_t width, uint16_t height,
   tiles                 = malloc( tilesWide * tilesHigh * sizeof( uint8_t* ) );
 
   #pragma omp parallel for default( none ) num_threads( cores )               \
-            shared( input, width, height, tileWidth, tileHeight, tiles, tile, \
+            shared( input, width, height, tileWidth, tileHeight, tiles,       \
                     tilesWide, tilesHigh )                                    \
             private( i, j, m, n, x, y, startXPixel, endXPixel, startYPixel,   \
-                     endYPixel, imagePixel, tilePixel )
+                     endYPixel, imagePixel, tile, tilePixel )
 
   // Break Up by Tiles in X and Y Direction
   for( i = 0; i < tilesHigh; i++ ) {
@@ -121,6 +121,9 @@ uint8_t** tilerOMP( uint8_t *input, uint16_t width, uint16_t height,
 
       // Allocate Memory for this Tile
       tile        = malloc( 3 * tileWidth * tileHeight * sizeof( uint8_t ) );
+      if( !tile ) {
+        printf( "\nERROR: Tiler memory allocation failure!\n" );
+      }
 
       // Tile Pixel Calculations
       startXPixel = j * tileWidth;
